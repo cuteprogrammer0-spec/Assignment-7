@@ -1,46 +1,45 @@
-import * as LucideIcons from "lucide-react"; 
-import { Link } from "react-router-dom";
+import { FaYoutube, FaFacebookF, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
-  // আইকনগুলো সেফভাবে খুঁজে বের করার উপায় (Fallback সহ)
-  const FacebookIcon = LucideIcons.Facebook || LucideIcons.FacebookIcon || LucideIcons.User;
-  const InstagramIcon = LucideIcons.Instagram || LucideIcons.InstagramIcon || LucideIcons.User;
-  const TwitterIcon = LucideIcons.Twitter || LucideIcons.TwitterIcon || LucideIcons.User;
-  const HeartIcon = LucideIcons.Heart || LucideIcons.User;
-
   return (
-    <footer className="bg-[#1e3a34] text-white py-12 mt-auto">
+    <footer className="bg-[#1A332B] text-white py-16 mt-12">
       <div className="max-w-7xl mx-auto px-4 text-center">
         
-        <h2 className="text-4xl font-bold mb-2">FriendSync</h2>
-        <p className="text-gray-300 text-sm max-w-lg mx-auto mb-6">
+        {/* Brand Logo/Heading */}
+        <h2 className="text-5xl font-bold mb-6 tracking-tight">KeenKeeper</h2>
+        
+        {/* Slogan */}
+        <p className="text-gray-300 text-sm max-w-2xl mx-auto mb-10 leading-relaxed">
           Your personal shelf of meaningful connections. Browse, tend, and nurture the relationships that matter most.
         </p>
 
-        <div className="mb-10">
-          <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-4 font-bold">Social Links</p>
+        {/* Social Links Section */}
+        <div className="mb-12">
+          <h4 className="text-sm font-semibold mb-6 uppercase tracking-widest text-gray-200">Social Links</h4>
           <div className="flex justify-center gap-4">
-            <a href="#" className="bg-white text-[#1e3a34] p-2 rounded-full hover:scale-110 transition-transform">
-              <FacebookIcon size={18} />
+            <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1A332B] hover:bg-gray-200 transition-all">
+              <FaYoutube />
             </a>
-            <a href="#" className="bg-white text-[#1e3a34] p-2 rounded-full hover:scale-110 transition-transform">
-              <InstagramIcon size={18} />
+            <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1A332B] hover:bg-gray-200 transition-all">
+              <FaFacebookF />
             </a>
-            <a href="#" className="bg-white text-[#1e3a34] p-2 rounded-full hover:scale-110 transition-transform">
-              <TwitterIcon size={18} />
+            <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1A332B] hover:bg-gray-200 transition-all">
+              <FaTwitter />
             </a>
           </div>
         </div>
 
-        <div className="border-t border-gray-700/50 pt-8 flex flex-col md:flex-row justify-between items-center text-[11px] text-gray-400 gap-4">
-          <p>© 2026 FriendSync. All rights reserved.</p>
-          <p className="flex items-center gap-1">
-            Made with <HeartIcon size={12} className="text-red-500 fill-red-500" /> by 
-            <span className="text-white font-medium ml-1">Mahdi Hasan</span>
-          </p>
-          <div className="flex gap-6 uppercase tracking-wider">
+        {/* Divider Line */}
+        <div className="border-t border-gray-700/50 w-full mb-8"></div>
+
+        {/* Bottom Bar */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-gray-400">
+          <p>© 2026 KeenKeeper. All rights reserved.</p>
+          
+          <div className="flex gap-8">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-white transition-colors">Cookies</a>
           </div>
         </div>
       </div>
