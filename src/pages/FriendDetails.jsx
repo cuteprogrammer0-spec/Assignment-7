@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Phone, MessageSquare, Video, Mail, Trash2, Archive, Moon } from "lucide-react";
-import toast from "react-hot-toast";
+import { HiOutlineClock, HiOutlineArchive, HiOutlineTrash, HiOutlinePhone, HiOutlineChatAlt2, HiOutlineVideoCamera } from "react-icons/hi";
+import { toast } from "react-hot-toast";
 
 const FriendDetails = () => {
   const { id } = useParams();
@@ -10,37 +10,126 @@ const FriendDetails = () => {
   useEffect(() => {
     fetch("/friends.json")
       .then((res) => res.json())
-      .then((data) => setFriend(data.find((f) => f.id === parseInt(id))));
+      .then((data) => {
+        const selectedFriend = data.find((f) => f.id === parseInt(id));
+        setFriend(selectedFriend);
+      });
   }, [id]);
 
-  if (!friend) return <div className="py-20 text-center">Loading...</div>;
+  const handleCheckIn = (type) => {
+    const newEntry = {
+      id: Date.now(),
+      friendId: friend.id,
+      friendName: friend.name,
+      type: type,
+      date: new Date().toLocaleDateString('en-US', { 
+        month: 'long', 
+        day: 'numeric', 
+        year: 'numeric' 
+      }),
+    };
 
-  const handleAction = (type) => {
-    const newEntry = { id: Date.now(), friendName: friend.name, type: type, date: new Date().toLocaleDateString() };
-    const existing = JSON.parse(localStorage.getItem("timeline")) || [];
-    localStorage.setItem("timeline", JSON.stringify([newEntry, ...existing]));
-    toast.success(`${type} with ${friend.name} logged!`);
+    const existingTimeline = JSON.parse(localStorage.getItem("timeline") || "[]");
+    localStorage.setItem("timeline", JSON.stringify([newEntry, ...existingTimeline]));
+
+    toast.success(`${type} recorded with ${friend.name}!`, {
+      style: { borderRadius: '10px', background: '#1A332B', color: '#fff' },
+    });
+  };
+
+  if (!friend) return <div className="text-center pt-20">Loading...</div>;
+
+  const statusStyles = {
+    "overdue": "bg-[#FF4D4D] text-white",
+    "almost due": "bg-[#FFB347] text-white",
+    "on-track": "bg-[#1A332B] text-white",
   };
 
   return (
-    <div className="py-10 px-4 max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-[#F8FAFB] min-h-screen">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <div className="lg:col-span-4 bg-white p-8 rounded-[2rem] border border-gray-100 text-center">
-          <img src={friend.picture} className="w-32 h-32 rounded-full mx-auto object-cover ring-4 ring-indigo-50 mb-4" />
-          <h2 className="text-2xl font-bold text-gray-800">{friend.name}</h2>
-          <p className="text-indigo-600 font-semibold text-sm uppercase">{friend.status}</p>
-          <p className="text-gray-500 mt-6 text-sm italic">"{friend.bio}"</p>
-          <div className="flex items-center justify-center gap-2 mt-6 text-gray-600 text-sm">
-            <Mail size={16} /> <span>{friend.email}</span>
+        
+        {/* Left Column */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center">
+            <img 
+              src={friend.picture} 
+              alt={friend.name} 
+              className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-gray-50 object-cover"
+            />
+            <h2 className="text-2xl font-bold text-[#1A332B]">{friend.name}</h2>
+            
+            <div className={`inline-block px-4 py-1 rounded-full text-xs font-bold mt-2 mb-4 ${statusStyles[friend.status]}`}>
+              {friend.status.toUpperCase()}
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-2 mb-4">
+              {friend.tags.map((tag, idx) => (
+                <span key={idx} className="px-3 py-1 bg-[#E8F5E9] text-[#2D5A4C] text-xs font-bold rounded-full uppercase">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <p className="text-gray-500 italic mb-2">"{friend.bio}"</p>
+            <p className="text-gray-400 text-sm">Preferred: {friend.email}</p>
+          </div>
+
+          <div className="space-y-3">
+            <button className="w-full flex items-center justify-center gap-2 py-3 bg-white border border-gray-100 rounded-xl text-gray-700 font-medium hover:bg-gray-50">
+              <HiOutlineClock /> Snooze 2 Weeks
+            </button>
+            <button className="w-full flex items-center justify-center gap-2 py-3 bg-white border border-gray-100 rounded-xl text-gray-700 font-medium hover:bg-gray-50">
+              <HiOutlineArchive /> Archive
+            </button>
+            <button className="w-full flex items-center justify-center gap-2 py-3 bg-white border border-gray-100 rounded-xl text-red-500 font-medium hover:bg-red-50">
+              <HiOutlineTrash /> Delete
+            </button>
           </div>
         </div>
 
-        <div className="lg:col-span-8 bg-indigo-600 p-8 rounded-[2rem] text-white">
-          <h3 className="text-xl font-bold mb-6">Quick Check-In</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <button onClick={() => handleAction('Call')} className="flex items-center justify-center gap-3 bg-white/10 hover:bg-white/20 p-4 rounded-2xl border border-white/10 transition-all"><Phone size={24} /> <span className="font-bold">Call</span></button>
-            <button onClick={() => handleAction('Text')} className="flex items-center justify-center gap-3 bg-white/10 hover:bg-white/20 p-4 rounded-2xl border border-white/10 transition-all"><MessageSquare size={24} /> <span className="font-bold">Text</span></button>
-            <button onClick={() => handleAction('Video')} className="flex items-center justify-center gap-3 bg-white/10 hover:bg-white/20 p-4 rounded-2xl border border-white/10 transition-all"><Video size={24} /> <span className="font-bold">Video</span></button>
+        {/* Right Column */}
+        <div className="lg:col-span-8 space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-white p-6 rounded-2xl border border-gray-100 text-center">
+              <h3 className="text-3xl font-bold text-[#1A332B]">{friend.days_since_contact}</h3>
+              <p className="text-gray-400 text-sm">Days Since Contact</p>
+            </div>
+            <div className="bg-white p-6 rounded-2xl border border-gray-100 text-center">
+              <h3 className="text-3xl font-bold text-[#1A332B]">{friend.goal}</h3>
+              <p className="text-gray-400 text-sm">Goal (Days)</p>
+            </div>
+            <div className="bg-white p-6 rounded-2xl border border-gray-100 text-center">
+              <h3 className="text-xl font-bold text-[#1A332B]">{friend.next_due_date}</h3>
+              <p className="text-gray-400 text-sm">Next Due</p>
+            </div>
+          </div>
+
+          <div className="bg-white p-6 rounded-2xl border border-gray-100 flex justify-between items-center">
+            <div>
+              <h4 className="font-bold text-[#1A332B] mb-1">Relationship Goal</h4>
+              <p className="text-gray-500">Connect every <span className="font-bold text-gray-800">{friend.goal} days</span></p>
+            </div>
+            <button className="px-4 py-2 bg-gray-50 text-gray-600 rounded-lg text-sm font-semibold border border-gray-200 hover:bg-gray-100">
+              Edit
+            </button>
+          </div>
+
+          <div className="bg-white p-8 rounded-2xl border border-gray-100">
+            <h4 className="font-bold text-[#1A332B] mb-6">Quick Check-In</h4>
+            <div className="grid grid-cols-3 gap-4">
+              <button onClick={() => handleCheckIn('Call')} className="flex flex-col items-center gap-2 p-4 rounded-xl hover:bg-gray-50 transition-all">
+                <div className="p-3 bg-gray-50 rounded-full text-2xl text-gray-700"><HiOutlinePhone /></div>
+                <span className="text-sm font-medium text-gray-600">Call</span>
+              </button>
+              <button onClick={() => handleCheckIn('Text')} className="flex flex-col items-center gap-2 p-4 rounded-xl hover:bg-gray-50 transition-all">
+                <div className="p-3 bg-gray-50 rounded-full text-2xl text-gray-700"><HiOutlineChatAlt2 /></div>
+                <span className="text-sm font-medium text-gray-600">Text</span>
+              </button>
+              <button onClick={() => handleCheckIn('Video')} className="flex flex-col items-center gap-2 p-4 rounded-xl hover:bg-gray-50 transition-all">
+                <div className="p-3 bg-gray-50 rounded-full text-2xl text-gray-700"><HiOutlineVideoCamera /></div>
+                <span className="text-sm font-medium text-gray-600">Video</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
