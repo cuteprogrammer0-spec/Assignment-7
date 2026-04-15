@@ -1,49 +1,47 @@
 import { Link } from "react-router-dom";
-import { Calendar, Mail, Tag } from "lucide-react";
 
 const FriendCard = ({ friend }) => {
-  // স্ট্যাটাস অনুযায়ী কালার সেট করা
-  const statusStyles = {
-    "overdue": "bg-red-100 text-red-700 border-red-200",
-    "almost due": "bg-yellow-100 text-yellow-700 border-yellow-200",
-    "on-track": "bg-green-100 text-green-700 border-green-200"
-  };
-
   return (
-    <Link to={`/friend/${friend.id}`} className="group bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-      <div className="relative mb-4">
+    <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-50 flex flex-col items-center text-center transition-all hover:shadow-md">
+      {/* বড় গোলাকার ছবি */}
+      <div className="w-24 h-24 rounded-full overflow-hidden mb-4 border-4 border-gray-50 shadow-inner">
         <img 
-          src={friend.picture} 
+          src={friend.image} 
           alt={friend.name} 
-          className="w-20 h-20 rounded-full object-cover ring-4 ring-gray-50 group-hover:ring-indigo-50 transition-all"
+          className="w-full h-full object-cover"
+          onError={(e) => { e.target.src = "https://via.placeholder.com/150" }}
         />
-        <span className={`absolute top-0 right-0 px-2 py-1 rounded-full text-[10px] font-bold uppercase border ${statusStyles[friend.status]}`}>
+      </div>
+
+      <h3 className="text-xl font-bold text-[#1e3a34]">{friend.name}</h3>
+      <p className="text-gray-400 text-sm mb-4">{friend.lastSeen}</p>
+      
+      {/* ট্যাগের অংশ */}
+      <div className="flex flex-wrap justify-center gap-2 mb-3">
+        {friend.tags.map((tag, index) => (
+          <span key={index} className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-[10px] font-black tracking-wider uppercase">
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      {/* স্ট্যাটাস ব্যাজ (Almost Due / Overdue) */}
+      <div className="mb-6">
+        <span className={`px-4 py-1.5 rounded-full text-white text-[11px] font-bold shadow-sm ${
+          friend.status === 'Overdue' ? 'bg-[#ef4444]' : 
+          friend.status === 'Almost Due' ? 'bg-[#f59e0b]' : 'bg-[#10b981]'
+        }`}>
           {friend.status}
         </span>
       </div>
-
-      <h3 className="text-xl font-bold text-gray-800 mb-1 group-hover:text-indigo-600 transition-colors">
-        {friend.name}
-      </h3>
       
-      <div className="space-y-2 mb-4">
-        <div className="flex items-center gap-2 text-sm text-gray-500">
-          <Calendar size={14} />
-          <span>Contacted {friend.days_since_contact} days ago</span>
-        </div>
-        <div className="flex flex-wrap gap-1">
-          {friend.tags.map((tag, index) => (
-            <span key={index} className="text-[11px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-md font-medium">
-              #{tag}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <button className="w-full py-2 bg-gray-50 text-gray-600 text-sm font-semibold rounded-lg group-hover:bg-indigo-600 group-hover:text-white transition-all">
-        View Profile
-      </button>
-    </Link>
+      <Link 
+        to={`/friend/${friend.id}`} 
+        className="w-full py-2.5 bg-[#f8fafc] text-gray-600 rounded-xl text-sm font-bold hover:bg-[#1e3a34] hover:text-white transition-all border border-gray-100"
+      >
+        View Details
+      </Link>
+    </div>
   );
 };
 

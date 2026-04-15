@@ -6,17 +6,17 @@ const Timeline = () => {
   const [filter, setFilter] = useState("All");
 
   useEffect(() => {
-    // LocalStorage থেকে ডেটা আনা (Requirement 10.4)
+  
     const storedData = JSON.parse(localStorage.getItem("timeline")) || [];
     setActivities(storedData);
   }, []);
 
-  // ফিল্টার লজিক (Challenge C2)
+
   const filteredActivities = filter === "All" 
     ? activities 
     : activities.filter(act => act.type === filter);
 
-  // আইকন রেন্ডার করার জন্য ফাংশন
+
   const getIcon = (type) => {
     switch (type) {
       case "Call": return <Phone className="text-blue-500" size={20} />;

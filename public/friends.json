@@ -1,74 +1,50 @@
 [
   {
     "id": 1,
-    "name": "Mahmudul Hasan",
-    "picture": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&h=200&auto=format&fit=crop",
-    "email": "mahmud@example.com",
-    "days_since_contact": 12,
-    "status": "overdue",
-    "tags": ["College", "Close Friend"],
-    "bio": "Met in university. We both share a passion for web development and competitive programming.",
-    "goal": 14,
-    "next_due_date": "2026-04-20"
+    "name": "David Kim",
+    "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
+    "lastSeen": "62d ago",
+    "status": "Almost Due",
+    "tags": ["WORK"]
   },
   {
     "id": 2,
-    "name": "Sarah Ahmed",
-    "picture": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&h=200&auto=format&fit=crop",
-    "email": "sarah@example.com",
-    "days_since_contact": 3,
-    "status": "on-track",
-    "tags": ["Office", "Designer"],
-    "bio": "Expert UI/UX designer. We often collaborate on frontend projects and Figma designs.",
-    "goal": 7,
-    "next_due_date": "2026-04-18"
+    "name": "Emma Wilson",
+    "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop",
+    "lastSeen": "62d ago",
+    "status": "Overdue",
+    "tags": ["FAMILY"]
   },
   {
     "id": 3,
-    "name": "Rakib Hossain",
-    "picture": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&h=200&auto=format&fit=crop",
-    "email": "rakib@tech.com",
-    "days_since_contact": 6,
-    "status": "almost due",
-    "tags": ["Childhood", "Travel"],
-    "bio": "Grew up together in the same neighborhood. He is my go-to person for trekking and hiking.",
-    "goal": 7,
-    "next_due_date": "2026-04-15"
+    "name": "Lisa Nakamura",
+    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
+    "lastSeen": "62d ago",
+    "status": "Overdue",
+    "tags": ["WORK"]
   },
   {
     "id": 4,
-    "name": "Nafisa Tasnim",
-    "picture": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&h=200&auto=format&fit=crop",
-    "email": "nafisa@example.com",
-    "days_since_contact": 25,
-    "status": "overdue",
-    "tags": ["Art", "Cousin"],
-    "bio": "A brilliant artist and a very close cousin. Need to catch up on her latest gallery work.",
-    "goal": 15,
-    "next_due_date": "2026-03-30"
+    "name": "James Wright",
+    "image": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=400&fit=crop",
+    "lastSeen": "62d ago",
+    "status": "Overdue",
+    "tags": ["HOBBY", "TRAVEL"]
   },
   {
     "id": 5,
-    "name": "Tanvir Rahman",
-    "picture": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&h=200&auto=format&fit=crop",
-    "email": "tanvir@startup.com",
-    "days_since_contact": 2,
-    "status": "on-track",
-    "tags": ["Work", "Mentorship"],
-    "bio": "Senior developer at a top startup. Always guides me with system design and backend architecture.",
-    "goal": 10,
-    "next_due_date": "2026-04-22"
+    "name": "Sarah Ahmed",
+    "image": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
+    "lastSeen": "5h ago",
+    "status": "On Track",
+    "tags": ["OFFICE"]
   },
   {
     "id": 6,
-    "name": "Anika Tabassum",
-    "picture": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&h=200&auto=format&fit=crop",
-    "email": "anika@music.com",
-    "days_since_contact": 8,
-    "status": "almost due",
-    "tags": ["Music", "Close Friend"],
-    "bio": "Amazing violinist and a great listener. We've been friends since school music classes.",
-    "goal": 10,
-    "next_due_date": "2026-04-16"
+    "name": "Rakib Hossain",
+    "image": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
+    "lastSeen": "12m ago",
+    "status": "On Track",
+    "tags": ["TRAVEL"]
   }
 ]

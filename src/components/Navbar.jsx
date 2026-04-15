@@ -1,47 +1,47 @@
 import { NavLink } from "react-router-dom";
-import { Home, Clock, BarChart3, Heart } from "lucide-react";
+import { HiOutlineHome, HiOutlineClock, HiOutlineChartBar } from "react-icons/hi";
 
 const Navbar = () => {
-  
-  const navLinkStyles = ({ isActive }) =>
-    `flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 ${
-      isActive 
-        ? "bg-indigo-600 text-white shadow-md" 
-        : "text-gray-600 hover:bg-gray-100"
-    }`;
+  // নেভিগেশন লিংকগুলোর ডাটা
+  const links = [
+    { name: "Home", path: "/", icon: <HiOutlineHome className="text-xl" /> },
+    { name: "Timeline", path: "/timeline", icon: <HiOutlineClock className="text-xl" /> },
+    { name: "Stats", path: "/stats", icon: <HiOutlineChartBar className="text-xl" /> },
+  ];
 
   return (
     <nav className="bg-white border-b border-gray-100 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-        
-    
-        <div className="flex items-center gap-2">
-          <div className="p-2 bg-indigo-600 rounded-lg">
-            <Heart size={20} className="text-white" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
+          
+          {/* বাঁদিকের লোগো সেকশন */}
+          <div className="flex-shrink-0">
+            <h1 className="text-2xl font-bold text-[#1A332B]">
+              Keen<span className="text-[#2D5A4C]">Keeper</span>
+            </h1>
           </div>
-          <span className="font-bold text-xl tracking-tight text-gray-800">
-            Friend<span className="text-indigo-600">Sync</span>
-          </span>
+
+          {/* ডানদিকের নেভিগেশন লিংক সেকশন */}
+          <div className="flex items-center gap-4">
+            {links.map((link) => (
+              <NavLink
+                key={link.path}
+                to={link.path}
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                    isActive
+                      ? "bg-[#2D5A4C] text-white shadow-md" // অ্যাক্টিভ থাকলে এই স্টাইল হবে
+                      : "text-gray-500 hover:bg-gray-50 hover:text-[#2D5A4C]" // সাধারণ স্টাইল
+                  }`
+                }
+              >
+                {link.icon}
+                <span>{link.name}</span>
+              </NavLink>
+            ))}
+          </div>
+
         </div>
-
-        
-        <div className="flex items-center gap-4">
-          <NavLink to="/" className={navLinkStyles}>
-            <Home size={18} />
-            <span className="hidden md:inline font-medium">Home</span>
-          </NavLink>
-
-          <NavLink to="/timeline" className={navLinkStyles}>
-            <Clock size={18} />
-            <span className="hidden md:inline font-medium">Timeline</span>
-          </NavLink>
-
-          <NavLink to="/stats" className={navLinkStyles}>
-            <BarChart3 size={18} />
-            <span className="hidden md:inline font-medium">Stats</span>
-          </NavLink>
-        </div>
-
       </div>
     </nav>
   );
