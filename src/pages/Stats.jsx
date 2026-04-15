@@ -7,7 +7,6 @@ const Stats = () => {
   useEffect(() => {
     const timeline = JSON.parse(localStorage.getItem("timeline") || "[]");
     
-    // ডাটা ফরম্যাট করা
     const chartData = [
       { name: 'Text', value: timeline.filter(t => t.type === 'Text').length },
       { name: 'Call', value: timeline.filter(t => t.type === 'Call').length },
@@ -16,25 +15,26 @@ const Stats = () => {
     setData(chartData);
   }, []);
 
-  // তোমার ইমেজের কালার অনুযায়ী
   const COLORS = ['#9333ea', '#1A332B', '#22c55e']; 
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12 min-h-screen bg-[#F8FAFB]">
-      <h1 className="text-3xl font-bold text-[#1A332B] mb-8">Friendship Analytics</h1>
+    <div className="max-w-4xl mx-auto px-4 py-8 md:py-12 min-h-screen bg-[#F8FAFB]">
+      <h1 className="text-2xl md:text-3xl font-bold text-[#1A332B] mb-8">Friendship Analytics</h1>
       
-      <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-        <p className="text-gray-500 font-semibold mb-10">By Interaction Type</p>
+      <div className="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+        <p className="text-gray-500 font-semibold mb-6 md:mb-10 text-sm md:text-base">By Interaction Type</p>
         
-        <div className="h-[350px] w-full">
+        {/* মোবাইলে হাইট ৩০০ এবং ডেস্কটপে ৩৫০ ফিক্স করা হয়েছে */}
+        <div className="h-[300px] md:h-[350px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
                 data={data}
                 cx="50%"
                 cy="50%"
-                innerRadius={80} // ডোনাট লুকের জন্য
-                outerRadius={110}
+                // মোবাইলে ইনার এবং আউটার রেডিয়াস কমিয়ে আনা হয়েছে যাতে স্ক্রিনে ফিট হয়
+                innerRadius={window.innerWidth < 768 ? 60 : 80} 
+                outerRadius={window.innerWidth < 768 ? 90 : 110}
                 paddingAngle={8}
                 dataKey="value"
               >
@@ -49,7 +49,7 @@ const Stats = () => {
                 verticalAlign="bottom" 
                 height={36} 
                 iconType="circle"
-                formatter={(value) => <span className="text-gray-600 font-medium text-sm ml-1">{value}</span>}
+                formatter={(value) => <span className="text-gray-600 font-medium text-xs md:text-sm ml-1">{value}</span>}
               />
             </PieChart>
           </ResponsiveContainer>
