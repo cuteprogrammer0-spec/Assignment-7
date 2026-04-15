@@ -1,7 +1,18 @@
+import { useEffect, useState } from "react";
 import { HiPlus } from "react-icons/hi";
+import FriendCard from "../components/FriendCard"; 
 
 const Home = () => {
-  // কার্ডের ডাটাগুলো একটা অ্যারেতে রাখলাম যাতে কোড ক্লিন থাকে
+  const [friends, setFriends] = useState([]);
+
+  
+  useEffect(() => {
+    fetch("/friends.json")
+      .then((res) => res.json())
+      .then((data) => setFriends(data))
+      .catch((err) => console.error("Data fetch korte somossa hocche:", err));
+  }, []);
+
   const stats = [
     { id: 1, count: "10", label: "Total Friends" },
     { id: 2, count: "3", label: "On Track" },
@@ -10,8 +21,9 @@ const Home = () => {
   ];
 
   return (
-    <div className="bg-[#F8FAFB] min-h-screen pb-12">
-      {/* ব্যানার সেকশন */}
+    <div className="bg-[#F8FAFB] min-h-screen pb-20">
+      
+      
       <div className="max-w-4xl mx-auto text-center pt-16 pb-10 px-4">
         <h1 className="text-4xl md:text-5xl font-bold text-[#1A332B] mb-4">
           Friends to keep close in your life
@@ -20,15 +32,14 @@ const Home = () => {
           Your personal shelf of meaningful connections. Browse, tend, and nurture the relationships that matter most.
         </p>
         
-        {/* বাটন */}
         <button className="inline-flex items-center gap-2 bg-[#2D5A4C] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#24483d] transition-colors shadow-lg">
           <HiPlus className="text-xl" />
           Add a Friend
         </button>
       </div>
 
-      {/* স্ট্যাটাস কার্ড সেকশন */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat) => (
             <div 
@@ -41,6 +52,21 @@ const Home = () => {
           ))}
         </div>
       </div>
+
+  
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-2xl font-bold text-[#1A332B]">Your Friends</h2>
+        </div>
+        
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {friends.map((friend) => (
+            <FriendCard key={friend.id} friend={friend} />
+          ))}
+        </div>
+      </div>
+
     </div>
   );
 };
